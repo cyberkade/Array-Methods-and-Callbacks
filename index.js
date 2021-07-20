@@ -159,25 +159,66 @@ function getCountryWins(data, initials) {
     // let awayWins = awayTeam.filter(item => item['Away Team Goals'] > item['Home Team Goals'])
 
 }
-getCountryWins(fifaData, 'GER')
+getCountryWins(fifaData, 'BRA')
 
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
 function getGoals(data) {
-    let finals = data.filter(item => item['Stage'] === 'Final')
-    // let goals = finals.
-}
 
+    let maxAway = data.reduce((max, item)=>{
+        if(item['Away Team Goals'] < max['Away Team Goals']){
+            return max
+        }else if(max['Away Team Goals'] < item['Away Team Goals'])
+        console.log(item['Away Team Goals'])
+        return item
+    });
+    let maxHome = data.reduce((max, item)=>{
+        if(item['Home Team Goals'] < max['Home Team Goals']){
+            return max
+        }else if(max['Home Team Goals'] < item['Home Team Goals'])
+        console.log(item['Home Team Goals'])
+        return item
+    });
+
+    console.log(maxHome)
+    console.log(maxAway)
+    if(maxHome['Home Team Goals'] < maxAway['Away Team Goals']){
+        return maxAway['Away Team Name']
+    }else if(maxHome['Home Team Goals'] > maxAway['Away Team Goals']){
+        return maxHome['Home Team Name']
+    }
+}
+getGoals(getFinals(fifaData));
+console.log(getGoals(getFinals(fifaData)))
 
 /* 💪💪💪💪💪 Stretch 3: 💪💪💪💪💪
 Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
 
-function badDefense(/* code here */) {
+function badDefense(data) {
+    // let maxAway = data.reduce((max, item)=>{
+    //     if(item['Away Team Goals'] < max['Away Team Goals']){
+    //         return max
+    //     }else if(max['Away Team Goals'] < item['Away Team Goals'])
+    //     console.log(item['Away Team Goals'])
+    //     return item
+    // });
+    // let maxHome = data.reduce((max, item)=>{
+    //     if(item['Home Team Goals'] < max['Home Team Goals']){
+    //         return max
+    //     }else if(max['Home Team Goals'] < item['Home Team Goals'])
+    //     console.log(item['Home Team Goals'])
+    //     return item
+    // });
 
-    /* code here */
-
+    // console.log(maxHome)
+    // console.log(maxAway)
+    // if(maxHome['Home Team Goals'] < maxAway['Away Team Goals']){
+    //     return maxAway['Away Team Name']
+    // }else if(maxHome['Home Team Goals'] > maxAway['Away Team Goals']){
+    //     return maxHome['Home Team Name']
+    // }
 }
 
 
