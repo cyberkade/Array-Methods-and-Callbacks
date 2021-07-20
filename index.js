@@ -101,21 +101,19 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 
 console.log('TASK 5');
-function getWinnersByYear(arr,getYearscb,getWinnerscb) {
-    const array = [];
-    for(let i = 0; i < getYearscb(arr,getFinals).length; i++){
-        array.push(`In ${getYearscb(arr, getFinals)[i]}, ${getWinnerscb(arr, getFinals)[i]} won the world cup!`)
-    }
-    return array;
-}
-
 // function getWinnersByYear(arr,getYearscb,getWinnerscb) {
 //     const array = [];
-//     let years = getYearscb().forEach(item => array.push(`In ${item}, `));
-//     getWinnerscb().forEach(item => years.push(`${item} won the world cup!`));
-//     console.log(array)
+//     for(let i = 0; i < getYearscb(arr,getFinals).length; i++){
+//         array.push(`In ${getYearscb(arr, getFinals)[i]}, ${getWinnerscb(arr, getFinals)[i]} won the world cup!`)
+//     }
 //     return array;
 // }
+
+function getWinnersByYear(arr,getYearscb,getWinnerscb) {
+    const array = [];
+    getYearscb(arr, getFinals).forEach((item, index) => array.push(`In ${item}, ${getWinnerscb(arr, getFinals)[index]} won the world cup!`));
+    return array;
+}
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -131,19 +129,15 @@ Use the higher order function getAverageGoals to do the following:
 console.log('TASK 6');
 
 function getAverageGoals(getFinalscb) {
-    let goals = getFinalscb.map((item)=>{
-        return item['Home Team Goals'] , item['Away Team Goals']
-    })
-    let sum = goals.reduce((total,item)=>{
-    return total += item;
-   },0)
-   let avg = sum / getFinalscb.length;
-   console.log(avg)
-   return avg.toFixed(2);
+    let arr = getFinalscb
+    let sum = arr.reduce((total,item)=>{
+        let goals = item['Home Team Goals'] + item['Away Team Goals']
+        return total + goals;
+    },0)
+    let avg = sum / getFinalscb.length;
+    console.log(sum)
+    return avg.toFixed(2);
 }
-console.log(getAverageGoals(getFinals(fifaData)));
-
-
 
 /// 🥅 STRETCH 🥅 ///
 
@@ -154,14 +148,16 @@ Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
 function getCountryWins(data, initials) {
-    let finals = data.filter(item => item['Stage'] === 'Final')
-    let homeTeam = finals.filter(item => item['Home Team Initials'] === initials)
-    let awayTeam = finals.filter(item => item['Away Team Initials'] === initials)
-    let homeWins = homeTeam.filter(item => item['Home Team Goals'] > item['Away Team Goals'])
-    let awayWins = awayTeam.filter(item => item['Away Team Goals'] > item['Home Team Goals'])
-    return homeWins.length + awayWins.length;
-    console.log(homeWins)
-    console.log(awayWins)
+    let homeFinals = data.filter(item => item['Stage'] === 'Final' && item['Home Team Initials'] === initials && item['Home Team Goals'] > item['Away Team Goals'])
+    let awayFinals = data.filter(item => item['Stage'] === 'Final' && item['Away Team Initials'] === initials && item['Away Team Goals'] > item['Home Team Goals'])
+    console.log('THIS IS THE WORLD CUP TOTAL WINS');
+    console.log(homeFinals.length + awayFinals.length);
+
+    // let homeTeam = finals.filter(item => item['Home Team Initials'] === initials)
+    // let awayTeam = finals.filter(item => item['Away Team Initials'] === initials)
+    // let homeWins = homeTeam.filter(item => item['Home Team Goals'] > item['Away Team Goals'])
+    // let awayWins = awayTeam.filter(item => item['Away Team Goals'] > item['Home Team Goals'])
+
 }
 getCountryWins(fifaData, 'GER')
 
@@ -171,7 +167,7 @@ Write a function called getGoals() that accepts a parameter `data` and returns t
 
 function getGoals(data) {
     let finals = data.filter(item => item['Stage'] === 'Final')
-
+    // let goals = finals.
 }
 
 
