@@ -59,8 +59,8 @@ Use the higher-order function called getYears to do the following:
 console.log('TASK 3');
 
 function getYears(arr,getFinalscb) {
-    const years = arr;
-    getFinalscb().map((data)=>{
+    const years = [];
+    getFinalscb(arr).map((data)=>{
         years.push(data.Year);
     })
     return years;
@@ -78,8 +78,8 @@ Use the higher-order function getWinners to do the following:
 console.log('TASK 4');
 
 function getWinners(arr, getFinalscb) {
-    const winners = arr;
-    getFinalscb().filter((item)=>{
+    const winners = [];
+    getFinalscb(arr).filter((item)=>{
         if(item['Home Team Goals'] > item['Away Team Goals']){
             winners.push(item['Home Team Name']);
         }else if(item['Home Team Goals'] < item['Away Team Goals']){
@@ -101,11 +101,21 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 
 console.log('TASK 5');
-
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(arr,getYearscb,getWinnerscb) {
+    const array = [];
+    for(let i = 0; i < getYearscb(arr,getFinals).length; i++){
+        array.push(`In ${getYearscb(arr, getFinals)[i]}, ${getWinnerscb(arr, getFinals)[i]} won the world cup!`)
+    }
+    return array;
 }
 
+// function getWinnersByYear(arr,getYearscb,getWinnerscb) {
+//     const array = [];
+//     let years = getYearscb().forEach(item => array.push(`In ${item}, `));
+//     getWinnerscb().forEach(item => years.push(`${item} won the world cup!`));
+//     console.log(array)
+//     return array;
+// }
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -120,10 +130,18 @@ Use the higher order function getAverageGoals to do the following:
 
 console.log('TASK 6');
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalscb) {
+    let goals = getFinalscb.map((item)=>{
+        return item['Home Team Goals'] , item['Away Team Goals']
+    })
+    let sum = goals.reduce((total,item)=>{
+    return total += item;
+   },0)
+   let avg = sum / getFinalscb.length;
+   console.log(avg)
+   return avg.toFixed(2);
 }
-
+console.log(getAverageGoals(getFinals(fifaData)));
 
 
 
